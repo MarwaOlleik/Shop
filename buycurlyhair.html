@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Welcome to Cosmaline</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style type="text/css">
+*{margin:0;
+   padding: 0;}
+.container{height:100vh;
+           width:100%;
+            background-image: url(images/back.jpg);
+           background-position:center;
+           background-size: cover;
+           padding-left:5%;
+           padding-right:5%;
+           box-sizing: border-box;
+           position:relative;
+           
+}
+
+  </style>
+        <script>
+             //variables:
+                var is_username_ok=0;
+                var is_password_strong=0;
+                var does_password_match=0;
+                var is_phone_format_correct=0; 
+                var is_mail_format_correct=0;
+            
+            
+            function check_username(){
+                var uname=document.getElementById("username").value;
+                var m=document.getElementById("username_message");
+                if (uname===""){
+                   is_username_ok=0;
+                   m.style.color="red";
+                   m.innerHTML="First name is empty!";
+                 }else{
+                    m.innerHTML=""; 
+                    is_username_ok=1;
+                 }
+             
+            }
+            
+            function check_pass_strength(){
+                var p=document.getElementById("firstpass").value;
+                var m=document.getElementById("shortpassmessage");
+                
+                if (p===""){
+                    m.style.color="red";
+                    m.innerHTML="First password is empty!";
+                    is_password_strong=0;
+                }else{ //First pass is not empty
+                  if (p.match(/^(?=.{6})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])/)===null){
+                // if (p.search(/^(?=.{6})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])/)===-1){
+                      m.style.color="red";      
+                      m.innerHTML="Weak passowrd";
+                      is_password_strong=0;
+                  }else{
+                      m.innerHTML="";
+                      is_password_strong=1;
+                  }
+                  
+        
+        }     
+      }
+      
+      
+      
+      
+      function check_pass_match(){
+                var first_password=document.getElementById("firstpass").value;
+                var second_password=document.getElementById("secondpass").value;
+                var m=document.getElementById("second_pass_message");
+                if (first_password!==second_password){
+                     m.style.color="red";      
+                     m.innerHTML="Passwords don't match!";
+                     does_password_match=0;
+                }else{ // equal
+                    
+                   
+                         if (second_password!=="" ) { //matching and not empty
+                             m.innerHTML=""; 
+                             does_password_match=1;
+                         } else{
+                m.style.color="red";             
+                m.innerHTML="second password is empty!";
+                              does_password_match=0;
+                              
+                         }   
+                }
+          
+      }
+      
+      
+      
+      function checkphone(){
+                var p=document.getElementById("phone").value;
+                var m=document.getElementById("phone_message");
+                if (p.match(/^\d{2}-\d{6}$/)===null){
+                    m.style.color="red";
+                    m.innerHTML="Wrong phone format (dd-dddddd)";
+                    is_phone_format_correct=0; 
+                   
+                }else{
+                    m.innerHTML="";
+                    is_phone_format_correct=1;
+                }
+      }
+      
+      function checkemail(){
+           var p=document.getElementById("email").value;
+           var m=document.getElementById("email_message");
+           if (p.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)===null){
+            m.style.color="red";  
+            m.innerHTML="Wrong email format";
+               is_mail_format_correct=0;
+           }else{
+                m.innerHTML="";
+                is_mail_format_correct=1;
+           }
+      }
+      
+      function  validate_form(){
+                   check_username();
+                   checkphone();
+                   check_pass_strength();
+                   check_pass_match();
+                   checkemail();
+        
+        if(is_username_ok && is_password_strong && does_password_match && is_phone_format_correct && is_mail_format_correct) {
+                        return true;
+                    }
+                    else {
+                        alert("Fix your form!");
+                        return false;
+                    }
+        
+        
+      }
+            
+            
+            
+        </script>
+            
+        
+        
+    </head>
+   <body>
+       <center>
+       <div class ="container">
+           <center>
+               <form action="CurlyHair.php" id="myform" onsubmit="return validate_form();" method="POST">
+            <table  border="0" align="center">
+                <tr>
+                    <td>First name</td>
+                    <td><input type="text" id="username" name="name" onkeyup="check_username()"/></td>
+                    <td id="username_message" ></td>
+                </tr>
+
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" id="firstpass" name="password" onkeyup="check_pass_strength()" /></td>
+                    <td id="shortpassmessage" ></td>
+                </tr>
+
+                <tr>
+                    <td>Re-enter Password</td>
+                    <td><input type="password" id="secondpass" onblur="check_pass_match()"/></td>
+                    <td  id="second_pass_message" ></td>
+                </tr>
+
+                <tr>
+                    <td>Phone</td>
+                    <td><input type="text" id="phone"  maxlength="9" name="phone" onblur="checkphone()" /></td>
+                    <td  id="phone_message"></td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" id="email" name="email" onkeyup="checkemail();" /></td>
+                    <td id="email_message"></td>
+                </tr>
+ <tr>
+                    <td>Address</td>
+                    <td><input type="text" id="address" name="address" /></td>
+                   
+                </tr>
+                <tr>
+                   <td ></td>
+                    <td  align="center"><input  type="submit"  value="Buy"/></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+               </center>
+           </div>
+           </center>
+    </body>
+</html>
